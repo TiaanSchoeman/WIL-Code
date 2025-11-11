@@ -1,182 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Edutrack Login</title>
 
-    <!-- Bootstrap & Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="CSS/public.css" />
 
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        height: 100vh;
-        background-color: #0b0b0b;
-        background-image: url("https://i.pinimg.com/736x/39/18/fd/3918fdc909b47b0f847e92ad15de0698.jpg");
-        background-repeat: no-repeat;
-        background-position: right center;
-        background-size: 40% auto;
-        display: flex;
-        justify-content: left;
-        padding-left: 16rem;
-        align-items: center;
-        font-family: "Poppins", sans-serif;
-        color: #fff;
-      }
-
-      .login-section {
-        width: 100%;
-        max-width: 380px;
-        text-align: center;
-      }
-
-      .H-logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .H-logo img {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 10px;
-      }
-
-      .H-logo h2 {
-        padding-left: 20px;
-        padding-top: 20px;
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 25px;
-      }
-
-      form {
-        text-align: left;
-      }
-
-      input placeholder {
-        color: #ffffff;
-        opacity: 1; 
-      }
-      .form-label {
-        color: #bbb;
-        font-size: 14px;
-      }
-
-      .form-control {
-        background-color: #141414;
-        border: 1px solid #2a2a2a;
-        color: #fff;
-        border-radius: 6px;
-        padding: 10px;
-      }
-
-      .form-control:focus {
-        background-color: #1b1b1b;
-        border-color: #007bff;
-        color: #fff;
-        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-      }
-
-      .btn-login {
-        background-color: #007bff;
-        border: none;
-        width: 100%;
-        padding: 10px;
-        border-radius: 6px;
-        font-weight: 500;
-        margin-top: 10px;
-      }
-
-      .btn-login:hover {
-        background-color: #005fc9;
-      }
-
-      .forgot {
-        text-align: center;
-        margin-top: 15px;
-      }
-
-      .forgot a {
-        color: #aaa;
-        text-decoration: none;
-        font-size: 13px;
-      }
-
-      .forgot a:hover {
-        color: #fff;
-      }
-
-      .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin-top: 20px;
-      }
-
-      .social-icons i {
-        font-size: 18px;
-        color: #aaa;
-        cursor: pointer;
-        transition: 0.2s;
-      }
-
-      .social-icons i:hover {
-        color: #fff;
-      }
-
-      @media (max-width: 768px) {
         body {
-          background-position: center bottom;
-          background-size: cover;
+            background-color: #252525;
+            background-image: url('https://i.pinimg.com/736x/bb/2c/ed/bb2ced1b5355b26d963d7e5d07d130bc.jpg');
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: 40% auto;
+            display: flex;
+            justify-content: left;
+            padding-left: 16rem;
+            align-items: center;
+            height: 100vh;
         }
 
         .login-section {
-          width: 90%;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
         }
-      }
+
+        form {
+            text-align: left;
+        }
+
+        .form-label {
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        .form-control {
+            background-color: #141414;
+            border: 1px solid #2a2a2a;
+            color: #fff;
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        .form-control:focus {
+            background-color: #1b1b1b;
+            border-color: #007bff;
+            color: #fff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .link a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .link a:hover {
+            color: #fff;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons i {
+            font-size: 18px;
+            color: #aaa;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .social-icons i:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-position: center bottom;
+                background-size: cover;
+                justify-content: center;
+                padding-left: 0;
+            }
+
+            .login-section {
+                width: 90%;
+            }
+        }
     </style>
-  </head>
+</head>
 
-  <body>
-    <div class="login-section">
-      <div class="H-logo">
-        <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="logo">
-        <h2>Edutrack</h2>
-      </div>
-
-      <form>
+<body>
+    <a href="index.html" style="text-decoration: none;">
+        <div class="login-section">
+            <div class="H-logo">
+                <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="logo" />
+                <h2>Edutrack</h2>
+            </div>
+    </a>
+    <form>
         <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Enter your username">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Enter your username" />
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Enter your password">
-        </div>
-        <button type="submit" class="btn btn-login">Login</button>
-      </form>
 
-      <div class="forgot">
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter your password" />
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+
+    <div class="link">
         <a href="#">Forgot Password?</a>
-      </div>
+    </div>
+    <div class="link">
+        <a href="index.html">Go Back</a>
+    </div>
 
-      <div class="social-icons">
+    <div class="social-icons">
         <i class="bi bi-facebook"></i>
         <i class="bi bi-google"></i>
         <i class="bi bi-github"></i>
-      </div>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+</body>
+
 </html>

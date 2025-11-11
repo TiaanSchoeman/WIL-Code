@@ -1,33 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="loginpage.html">Login</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Register</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Contact Us</a>
-            </li>
-        </ul>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edutrack | Landing Page</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="CSS/public.css" />
+
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)),
+                url('https://i.pinimg.com/736x/68/63/c5/6863c5b1b3a89bd262551c87e126da03.jpg') center/cover no-repeat;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            letter-spacing: 10px;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="H-logo">
+            <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="Edutrack Logo" />
+            <h2>Edutrack</h2>
         </div>
-    </div>
+    </header>
+
+    <nav>
+        <a href="loginpage.html"><i class="fa-regular fa-user"></i> Login</a>
+        <a href="registerpage.html"><i class="fa-regular fa-hand-pointer"></i> Register</a>
+        <a href="contactpage.html"><i class="fa-regular fa-message"></i> Contact</a>
     </nav>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
-  </body>
+
+    <section class="hero">
+        <h1>Welcome to Edutrack</h1>
+        <p>Your journey to knowledge starts here.</p>
+        <a href="registerpage.html">
+            <button class="btn">Get Started</button>
+        </a>
+    </section>
+
+    <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
+</body>
+
 </html>
