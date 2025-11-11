@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.H-logo {
+  display: flex;
+  align-items: center;
+}
+
+.H-logo h2 {
+  padding-top: 10px;
+  margin-left: 10px;
+  font-size: 24px;
+}
