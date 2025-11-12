@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edutrack | Student Dashboard</title>
+  <link rel="stylesheet" href="CSS/admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div>
+      <div class="logo">
+        <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="logo" />
+        <h2>Edutrack</h2>
+      </div>
+
+      <nav>
+        <a href="dashboard.html" class="active">🏠 Dashboard</a>
+        <a href="mycourse.html">📚 My Courses</a>
+        <a href="grades.html">🧾 Grades</a>
+        <a href="timetable.html">📅 Schedule</a>
+        <a href="notifications.html">💬 Notifications</a>
+        <a href="profile.html">⚙️ Profile</a>
+      </nav>
+    </div>
+    <h2>Welcome, <span id="studentName"></span>!</h2>
+<button onclick="logoutUser()">Logout</button>
+    <button class="logout-btn" onclick="logoutUser()">🚪 Logout</button>
+  </aside>
+
+  <main class="main-content">
+    <header>
+      <h1>Welcome, <span id="studentName">Student</span> 👋</h1>
+      <div class="user-profile">
+        <img src="https://i.pinimg.com/736x/3a/63/f3/3a63f3f9b08bbdc5cde38c019e7c9e59.jpg" alt="User" />
+      </div>
+    </header>
+
+    <section class="dashboard-cards">
+      <div class="card">
+        <h3>Active Courses</h3>
+        <p>5 Enrolled</p>
+      </div>
+      <div class="card">
+        <h3>Attendance</h3>
+        <p>92% Present</p>
+      </div>
+      <div class="card">
+        <h3>GPA</h3>
+        <p>3.8 / 4.0</p>
+      </div>
+      <div class="card">
+        <h3>Notifications</h3>
+        <p>2 New Messages</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Recent Grades</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Assignment</th>
+            <th>Grade</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Web Development</td>
+            <td>Project 1</td>
+            <td>A</td>
+            <td>11 Nov 2025</td>
+          </tr>
+          <tr>
+            <td>Database Systems</td>
+            <td>Quiz 2</td>
+            <td>B+</td>
+            <td>8 Nov 2025</td>
+          </tr>
+          <tr>
+            <td>Software Engineering</td>
+            <td>Report</td>
+            <td>A-</td>
+            <td>6 Nov 2025</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    // Retrieve and display user name
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+      if (user) {
+        document.getElementById("studentName").textContent = user.name;
+      } else {
+        window.location.href = "loginpage.html";
+      }
+    });
+
+    function logoutUser() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "loginpage.html";
+    }
+  </script>
+  <script src="auth.js"></script>
+<script>
+  checkLogin();
+</script>
+
+</body>
+
+</html>

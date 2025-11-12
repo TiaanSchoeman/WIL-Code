@@ -94,14 +94,17 @@
 
     <div class="register-box">
         <h2>Create Account</h2>
-        <form action="#" method="post">
-            <input type="text" placeholder="Full Name" required />
-            <input type="email" placeholder="Email Address" required />
-            <input type="password" placeholder="Password" required />
-            <input type="password" placeholder="Confirm Password" required />
-            <button type="submit" class="btn">Register</button>
-            <p>Already have an account? <a href="loginpage.html">Login</a></p>
-        </form>
+      <form onsubmit="registerUser(event)">
+  <input type="text" id="regName" placeholder="Full Name" required />
+  <input type="email" id="regEmail" placeholder="Email Address" required />
+  <input type="password" id="regPassword" placeholder="Password" required />
+  <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+  <button type="submit" class="btn">Register</button>
+  <p>Already have an account? <a href="loginpage.html">Login</a></p>
+</form>
+
+<script src="JS/public.js"></script>
+
     </div>
 
     <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
