@@ -17,8 +17,8 @@
       <h2>Edutrack</h2>
     </div>
     <nav>
-      <a href="dashboard.html" ><i class="fa-solid fa-house"></i> Dashboard</a>
-      <a href="uploadpage.html" ><i class="fa-solid fa-circle-up"></i> Uploads</a>
+      <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+      <a href="uploadpage.html"><i class="fa-solid fa-circle-up"></i> Uploads</a>
       <a href="downloadpage.html"><i class="fa-regular fa-circle-down"></i> Downloads</a>
       <a href="resourcespage.html" class="active"><i class="fa-solid fa-file"></i> Resources</a>
       <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
@@ -28,18 +28,55 @@
   <button class="logout-btn" onclick="logoutUser()"><i class="fa-regular fa-circle-xmark"></i> Logout</button>
 </aside>
 
-  <main class="main-content">
-    <header><h1>Study Resources</h1></header>
-    <section class="section">
-      <p>Access materials and guides:</p>
-      <ul class="notice-board">
-        <li>🧾 Web Development Guide – <a href="#">Download</a></li>
-        <li>📘 Database System Notes – <a href="#">Download</a></li>
-        <li>📗 Software Engineering Template – <a href="#">Download</a></li>
-      </ul>
-    </section>
-  </main>
+<main class="main-content">
+  <header><h1>Study Resources</h1></header>
 
-  <script src="JS/auth.js"></script>
+  <section class="section">
+    <div class="download-search">
+      <input type="text" placeholder="Search resources..." id="resourceSearch" onkeyup="filterResources()">
+    </div>
+
+    <h2 class="section-heading">Featured Resources</h2>
+    <div class="download-container featured-resources">
+      <div class="download-card">
+        <div><i class="fa-solid fa-laptop-code"></i> Web Development Guide</div>
+        <a href="#" class="btn"><i class="fa-solid fa-download"></i> Download</a>
+      </div>
+      <div class="download-card">
+        <div><i class="fa-solid fa-database"></i> Database System Notes</div>
+        <a href="#" class="btn"><i class="fa-solid fa-download"></i> Download</a>
+      </div>
+      <div class="download-card">
+        <div><i class="fa-solid fa-file-lines"></i> Software Engineering Template</div>
+        <a href="#" class="btn"><i class="fa-solid fa-download"></i> Download</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-heading">All Resources</h2>
+    <ul class="notice-board" id="resourceList">
+      <li><i class="fa-solid fa-laptop-code"></i> Web Development Guide – <a href="#"><i class="fa-solid fa-download"></i> Download</a></li>
+      <li><i class="fa-solid fa-database"></i> Database System Notes – <a href="#"><i class="fa-solid fa-download"></i> Download</a></li>
+      <li><i class="fa-solid fa-file-lines"></i> Software Engineering Template – <a href="#"><i class="fa-solid fa-download"></i> Download</a></li>
+      <li><i class="fa-brands fa-html5"></i> HTML & CSS Cheatsheet – <a href="#"><i class="fa-solid fa-download"></i> Download</a></li>
+      <li><i class="fa-brands fa-js-square"></i> JavaScript Guide – <a href="#"><i class="fa-solid fa-download"></i> Download</a></li>
+      <li><i class="fa-brands fa-python"></i> Python Notes – <a href="#"><i class="fa-solid fa-download"></i> Download</a></li>
+    </ul>
+  </section>
+</main>
+
+<script src="JS/admin.js"></script>
+<script>
+function filterResources() {
+  const input = document.getElementById('resourceSearch').value.toLowerCase();
+  const list = document.getElementById('resourceList');
+  const items = list.getElementsByTagName('li');
+  for(let i = 0; i < items.length; i++){
+    let text = items[i].textContent || items[i].innerText;
+    items[i].style.display = text.toLowerCase().includes(input) ? '' : 'none';
+  }
+}
+</script>
 </body>
 </html>
