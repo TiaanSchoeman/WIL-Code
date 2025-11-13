@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edutrack | Profile</title>
+  <title>Edutrack | Resources</title>
   <link rel="stylesheet" href="CSS/admin.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
@@ -20,41 +20,26 @@
       <a href="dashboard.html" ><i class="fa-solid fa-house"></i> Dashboard</a>
       <a href="uploadpage.html" ><i class="fa-solid fa-circle-up"></i> Uploads</a>
       <a href="downloadpage.html"><i class="fa-regular fa-circle-down"></i> Downloads</a>
-      <a href="resourcespage.html" "><i class="fa-solid fa-file"></i> Resources</a>
-      <a href="profile.html" class="active"><i class="fa-solid fa-user"></i> Profile</a>
+      <a href="resourcespage.html" class="active"><i class="fa-solid fa-file"></i> Resources</a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
       <a href="../Public/contactpage.html"><i class="fa-solid fa-comment"></i> Contact</a>
     </nav>
   </div>
   <button class="logout-btn" onclick="logoutUser()"><i class="fa-regular fa-circle-xmark"></i> Logout</button>
 </aside>
+
   <main class="main-content">
-    <header><h1>Personal Information</h1></header>
+    <header><h1>Study Resources</h1></header>
     <section class="section">
-      <form id="updateForm">
-        <label>Full Name:</label>
-        <input type="text" id="name" readonly />
-        <label>Email:</label>
-        <input type="email" id="email" readonly />
-        <label>New Password:</label>
-        <input type="password" id="password" />
-        <button type="submit" class="btn">Update</button>
-      </form>
+      <p>Access materials and guides:</p>
+      <ul class="notice-board">
+        <li>🧾 Web Development Guide – <a href="#">Download</a></li>
+        <li>📘 Database System Notes – <a href="#">Download</a></li>
+        <li>📗 Software Engineering Template – <a href="#">Download</a></li>
+      </ul>
     </section>
   </main>
 
   <script src="JS/auth.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
-      if (!user) return (window.location.href = "../Public/loginpage.html");
-      document.getElementById("name").value = user.name;
-      document.getElementById("email").value = user.email;
-    });
-
-    document.getElementById("updateForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("✅ Information updated successfully (placeholder)");
-    });
-  </script>
 </body>
 </html>

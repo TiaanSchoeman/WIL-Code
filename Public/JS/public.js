@@ -1,78 +1,65 @@
-// === Register User ===
-function registerUser(event) {
-  event.preventDefault();
-
-  const name = document.getElementById("regName").value.trim();
-  const email = document.getElementById("regEmail").value.trim();
-  const password = document.getElementById("regPassword").value.trim();
-  const confirmPassword = document.getElementById("confirmPassword").value.trim();
-
-  if (!name || !email || !password || !confirmPassword) {
-    alert("Please fill in all fields.");
-    return;
-  }
-
-  if (password !== confirmPassword) {
-    alert("Passwords do not match!");
-    return;
-  }
-
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-
-  if (users.some(u => u.email === email)) {
-    alert("User already exists! Please login instead.");
-    window.location.href = "loginpage.html";
-    return;
-  }
-
-  const user = { name, email, password };
-  users.push(user);
-  localStorage.setItem("users", JSON.stringify(users));
-
-  alert("Registration successful! Please login.");
-  window.location.href = "loginpage.html";
-}
-
-// === Login User ===
+// ---------------- REGISTER ----------------
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("loginForm");
-  if (!form) return;
+  const registerForm = document.getElementById("registerForm");
+  if (registerForm) {
+    registerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+      const name = document.getElementById("regName").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
 
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+      if (!name || !email || !password || !confirmPassword) {
+        alert("Please fill in all fields.");
+        return;
+      }
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
 
-    const validUser = users.find(
-      (user) => (user.email === username || user.name === username) && user.password === password
-    );
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      const existingUser = users.find((u) => u.email === email);
 
-    if (validUser) {
-      localStorage.setItem("loggedInUser", JSON.stringify(validUser));
-      alert(`Welcome back, ${validUser.name}!`);
-      window.location.href = "dashboard.html";
-    } else {
-      alert("Invalid username or password. Please try again.");
-    }
-  });
-});
+      if (existingUser) {
+        alert("An account with this email already exists.");
+        return;
+      }
 
-// === Dashboard Authentication Check ===
-function checkLogin() {
-  const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  if (!user) {
-    window.location.href = "loginpage.html";
-  } else {
-    const nameEl = document.getElementById("studentName");
-    if (nameEl) nameEl.innerText = user.name;
+      users.push({ name, email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("Account created successfully!");
+      window.location.href = "loginpage.html";
+    });
   }
-}
 
-// === Logout ===
-function logoutUser() {
-  localStorage.removeItem("loggedInUser");
-  window.location.href = "loginpage.html";
-}
+  // ---------------- LOGIN ----------------
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const user = users.find((u) => u.email === email && u.password === password);
+      const message = document.getElementById("loginMessage");
+
+      if (user) {
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+        message.textContent = "Login successful! Redirecting...";
+        message.style.color = "lightgreen";
+        setTimeout(() => {
+          window.location.href = "../Admin/dashboard.html";
+        }, 1000);
+      } else {
+        message.textContent = "Invalid email or password.";
+        message.style.color = "red";
+      }
+    });
+  }
+});

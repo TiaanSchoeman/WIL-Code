@@ -2,112 +2,86 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register | Edutrack</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | Edutrack</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="CSS/public.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="CSS/public.css" />
 
-    <style>
-        body {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-                url('https://i.pinimg.com/1200x/cd/91/0e/cd910ecd1f50b1ddff82d26438f8eeec.jpg') center/cover no-repeat;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+  <style>
+    body {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+        url('https://i.pinimg.com/1200x/cd/91/0e/cd910ecd1f50b1ddff82d26438f8eeec.jpg') center/cover no-repeat;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .register-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 40px 50px;
-            width: 380px;
-            text-align: center;
-        }
+    .register-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 40px 50px;
+      width: 380px;
+      text-align: center;
+    }
 
-        .register-box h2 {
-            font-size: 28px;
-            margin-bottom: 25px;
-        }
+    .register-box h2 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: white;
+    }
 
-        .register-box input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            outline: none;
-            font-size: 15px;
-        }
+    .register-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      outline: none;
+      font-size: 15px;
+    }
 
-        .register-box input::placeholder {
-            color: #ddd;
-        }
-
-        .register-box p {
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .register-box a {
-            color: #adadad;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .register-box a:hover {
-            color: #fff;
-        }
-
-        @media (max-width: 768px) {
-            .register-box {
-                width: 90%;
-                padding: 30px;
-            }
-        }
-    </style>
+    .register-box input::placeholder {
+      color: #ddd;
+    }
+    
+    p {
+      color: white;
+    }
+  </style>
 </head>
 
 <body>
-    <a href="../index.html">
-        <header>
-            <div class="login-section">
-                <div class="H-logo">
-                    <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="logo" />
-                    <h2>Edutrack</h2>
-                </div>
-        </header>
-    </a>
+  <a href="../index.html">
+    <header>
+      <div class="login-section">
+        <div class="H-logo">
+          <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="logo" />
+          <h2 style="color:white;">Edutrack</h2>
+        </div>
+    </header>
+  </a>
 
-    <nav>
-        <a href="loginpage.html"><i class="fa-regular fa-user"></i> Login</a>
-        <a href="registerpage.html"><i class="fa-regular fa-hand-pointer"></i> Register</a>
-        <a href="contactpage.html"><i class="fa-regular fa-message"></i> Contact</a>
-    </nav>
+  <div class="register-box">
+    <h2>Create Account</h2>
+    <form id="registerForm">
+      <input type="text" id="regName" placeholder="Full Name" required />
+      <input type="email" id="regEmail" placeholder="Email Address" required />
+      <input type="password" id="regPassword" placeholder="Password" required />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      <button type="submit" class="btn">Register</button>
+      <p>Already have an account? <a href="loginpage.html">Login</a></p>
+    </form>
+  </div>
 
-    <div class="register-box">
-        <h2>Create Account</h2>
-      <form onsubmit="registerUser(event)">
-  <input type="text" id="regName" placeholder="Full Name" required />
-  <input type="email" id="regEmail" placeholder="Email Address" required />
-  <input type="password" id="regPassword" placeholder="Password" required />
-  <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-  <button type="submit" class="btn">Register</button>
-  <p>Already have an account? <a href="loginpage.html">Login</a></p>
-</form>
-
-<script src="JS/public.js"></script>
-
-    </div>
-
-    <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
+  <script src="JS/public.js"></script>
+  <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

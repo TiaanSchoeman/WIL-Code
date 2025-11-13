@@ -1,119 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edutrack | Student Dashboard</title>
+  <title>Edutrack | Dashboard</title>
   <link rel="stylesheet" href="CSS/admin.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
-  <aside class="sidebar">
-    <div>
-      <div class="logo">
-        <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="logo" />
-        <h2>Edutrack</h2>
-      </div>
-
-      <nav>
-        <a href="dashboard.html" class="active">🏠 Dashboard</a>
-        <a href="mycourse.html">📚 My Courses</a>
-        <a href="grades.html">🧾 Grades</a>
-        <a href="timetable.html">📅 Schedule</a>
-        <a href="notifications.html">💬 Notifications</a>
-        <a href="profile.html">⚙️ Profile</a>
-      </nav>
+<aside class="sidebar">
+  <div>
+    <div class="logo">
+      <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="logo" />
+      <h2>Edutrack</h2>
     </div>
-    <h2>Welcome, <span id="studentName"></span>!</h2>
-<button onclick="logoutUser()">Logout</button>
-    <button class="logout-btn" onclick="logoutUser()">🚪 Logout</button>
-  </aside>
+    <nav>
+      <a href="dashboard.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a>
+      <a href="uploadpage.html"><i class="fa-solid fa-circle-up"></i> Uploads</a>
+      <a href="downloadpage.html"><i class="fa-regular fa-circle-down"></i> Downloads</a>
+      <a href="resourcespage.html"><i class="fa-solid fa-file"></i> Resources</a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+      <a href="../Public/contactpage.html"><i class="fa-solid fa-comment"></i> Contact</a>
+    </nav>
+  </div>
+  <button class="logout-btn" onclick="logoutUser()"><i class="fa-regular fa-circle-xmark"></i> Logout</button>
+</aside>
 
-  <main class="main-content">
-    <header>
-      <h1>Welcome, <span id="studentName">Student</span> 👋</h1>
-      <div class="user-profile">
-        <img src="https://i.pinimg.com/736x/3a/63/f3/3a63f3f9b08bbdc5cde38c019e7c9e59.jpg" alt="User" />
+<main class="main-content">
+
+  <header class="greeting-banner">
+    <div>
+      <h1>Welcome back, <span id="studentName">Student</span></h1>
+      <p>Stay updated on your upcoming assessments and performance progress.</p>
+    </div>
+    <div class="user-profile">
+      <i class="fa-regular fa-user"></i>
+      <span id="topStudentName">Student</span>
+    </div>
+  </header>
+
+  <section class="section notice-section">
+    <h2 class="section-heading"><i class="fa-solid fa-bullhorn"></i> Notice Board</h2>
+    <div class="cards-wrapper">
+      <ul class="notice-board">
+        <li><i class="fa-solid fa-calendar"></i> Semester 2 registration opens <strong>20 Nov 2025</strong>.</li>
+        <li><i class="fa-solid fa-book"></i> Web Development midterm assessment due <strong>18 Nov 2025</strong>.</li>
+        <li><i class="fa-solid fa-briefcase"></i> Career workshop on <strong>25 Nov 2025</strong> in Hall 3.</li>
+        <li><i class="fa-solid fa-laptop-code"></i> New programming tutorials uploaded to Resources.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section upcoming-section">
+    <h2 class="section-heading"><i class="fa-solid fa-folder"></i> Upcoming Assessments</h2>
+    <div class="cards-wrapper upcoming-list">
+      <div class="upcoming-card">
+        <h3>Database Systems</h3>
+        <p>Final Project — Due: <strong>22 Nov 2025</strong></p>
       </div>
-    </header>
-
-    <section class="dashboard-cards">
-      <div class="card">
-        <h3>Active Courses</h3>
-        <p>5 Enrolled</p>
+      <div class="upcoming-card">
+        <h3>Software Engineering</h3>
+        <p>Case Study — Due: <strong>27 Nov 2025</strong></p>
       </div>
-      <div class="card">
-        <h3>Attendance</h3>
-        <p>92% Present</p>
+      <div class="upcoming-card">
+        <h3>Networking</h3>
+        <p>Quiz 4 — Due: <strong>30 Nov 2025</strong></p>
       </div>
-      <div class="card">
-        <h3>GPA</h3>
-        <p>3.8 / 4.0</p>
+      <div class="upcoming-card">
+        <h3>Web Development</h3>
+        <p>Practical — Due: <strong>2 Dec 2025</strong></p>
       </div>
-      <div class="card">
-        <h3>Notifications</h3>
-        <p>2 New Messages</p>
+    </div>
+  </section>
+
+  <section class="section chart-section">
+    <h2 class="section-heading"><i class="fa-regular fa-chart-bar"></i> Student Performance</h2>
+    <div class="cards-wrapper banner-grid">
+      <div class="chart-container">
+        <h3>Attendance Over Time</h3>
+        <canvas id="attendanceChart"></canvas>
       </div>
-    </section>
+      <div class="chart-container">
+        <h3>Grades Over Time</h3>
+        <canvas id="gradesChart"></canvas>
+      </div>
+    </div>
+    <div class="cards-wrapper chart-container" style="margin-top: 25px;">
+      <h3>Assignments Status</h3>
+      <canvas id="pieChart"></canvas>
+    </div>
+  </section>
 
-    <section class="section">
-      <h2>Recent Grades</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Course</th>
-            <th>Assignment</th>
-            <th>Grade</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Web Development</td>
-            <td>Project 1</td>
-            <td>A</td>
-            <td>11 Nov 2025</td>
-          </tr>
-          <tr>
-            <td>Database Systems</td>
-            <td>Quiz 2</td>
-            <td>B+</td>
-            <td>8 Nov 2025</td>
-          </tr>
-          <tr>
-            <td>Software Engineering</td>
-            <td>Report</td>
-            <td>A-</td>
-            <td>6 Nov 2025</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
+</main>
 
-  <script>
-    // Retrieve and display user name
-    document.addEventListener("DOMContentLoaded", () => {
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
-      if (user) {
-        document.getElementById("studentName").textContent = user.name;
-      } else {
-        window.location.href = "loginpage.html";
-      }
-    });
-
-    function logoutUser() {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "loginpage.html";
-    }
-  </script>
-  <script src="auth.js"></script>
-<script>
-  checkLogin();
-</script>
-
+<script src="JS/admin.js"></script>
 </body>
-
 </html>
