@@ -6,6 +6,16 @@
   <title>Edutrack | Uploads</title>
   <link rel="stylesheet" href="CSS/admin.css" />
     <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
+    <script type="module">
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../Public/loginpage.html";
+    }
+});
+</script>
+
   <style>
     /* Upload page enhancements */
     .upload-section {

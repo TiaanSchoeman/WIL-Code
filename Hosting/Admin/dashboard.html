@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="CSS/admin.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
+  <script type="module">
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../Public/loginpage.html";
+    }
+});
+</script>
+
 </head>
 <body>
 <aside class="sidebar">
@@ -21,7 +31,7 @@
       <a href="downloadpage.html"><i class="fa-regular fa-circle-down"></i> Downloads</a>
       <a href="resourcespage.html"><i class="fa-solid fa-file"></i> Resources</a>
       <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
-      <a href="../Public/contactpage.html"><i class="fa-solid fa-comment"></i> Contact</a>
+      <a href="contactpage.html"><i class="fa-solid fa-comment"></i> Contact</a>
     </nav>
   </div>
   <button class="logout-btn" onclick="logoutUser()"><i class="fa-regular fa-circle-xmark"></i> Logout</button>

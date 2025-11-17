@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 🔐 Temporary open access until 2025-12-14
+    match /{document=**} {
+      allow read, write: if request.time < timestamp.date(2025, 12, 14);
+    }
+
+    // 👤 Students can only access their own data
+    match /students/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // 🛡 Admins can access everything
+    match /{document=**} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+}

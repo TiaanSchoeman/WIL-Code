@@ -112,3 +112,70 @@ function addFileToTable(file) {
 function downloadFile(filename) {
   alert(`Downloading ${filename} (replace with real server download).`);
 }
+
+// --- Authentication Check ---
+if (!localStorage.getItem("loggedInUser")) {
+    window.location.href = "../Public/loginpage.html";
+}
+
+// --- IndexedDB Setup ---
+let db;
+const request = indexedDB.open("EduTrackDB", 1);
+
+request.onupgradeneeded = function (event) {
+    db = event.target.result;
+
+    if (!db.objectStoreNames.contains("users")) {
+        db.createObjectStore("users", { keyPath: "username" });
+    }
+};
+
+request.onsuccess = function (event) {
+    db = event.target.result;
+    loadProfileData();
+};
+
+// --- Load Data Into Profile Page ---
+function loadProfileData() {
+    const username = localStorage.getItem("loggedInUser");
+
+    const tx = db.transaction("users", "readonly");
+    const store = tx.objectStore("users");
+    const request = store.get(username);
+
+    request.onsuccess = function () {
+        const user = request.result;
+
+        document.getElementById("username").value = user.username;
+        document.getElementById("fullname").value = user.fullname;
+        document.getElementById("email").value = user.email;
+        document.getElementById("phone").value = user.phone;
+    };
+}
+
+// --- Save Changes ---
+document.getElementById("profileForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const updatedUser = {
+        username: document.getElementById("username").value,
+        fullname: document.getElementById("fullname").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        password: document.getElementById("password").value.trim()
+    };
+
+    const tx = db.transaction("users", "readwrite");
+    const store = tx.objectStore("users");
+
+    store.put(updatedUser);
+
+    tx.oncomplete = function () {
+        document.getElementById("saveMessage").textContent = "Profile updated successfully!";
+    };
+});
+
+// --- Logout Button ---
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("loggedInUser");
+});

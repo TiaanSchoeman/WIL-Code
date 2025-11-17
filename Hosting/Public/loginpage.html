@@ -88,7 +88,46 @@
   <div class="link">
     <a href="../index.html">Go Back</a>
   </div>
+  <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
+      const firebaseConfig = {
+          apiKey: "AIzaSyDkx8CI49tcmgeS2AcLjkVfU5N4ZeEp0ME",
+          authDomain: "wil-tiaan-schoeman-edutrack.firebaseapp.com",
+          projectId: "wil-tiaan-schoeman-edutrack",
+          storageBucket: "wil-tiaan-schoeman-edutrack.firebasestorage.app",
+          messagingSenderId: "876781633466",
+          appId: "1:876781633466:web:99412ad44b3ab97c43a783",
+          measurementId: "G-V5GE46GW84"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      window.auth = getAuth(app);
+      window.db = getFirestore(app);
+  </script>
+  <script type="module">
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+        localStorage.setItem("loggedInUser", userCredential.user.uid);
+
+        window.location.href = "../Admin/dashboard.html";
+
+    } catch (err) {
+        alert("Incorrect email or password");
+    }
+});
+</script>
   <script src="JS/public.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

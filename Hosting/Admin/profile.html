@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edutrack | Personal Information</title>
+  <link rel="stylesheet" href="CSS/admin.css" />
+    <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
+  <script type="module">
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../Public/loginpage.html";
+    } else {
+        const studentName = document.getElementById("studentName");
+        const topStudentName = document.getElementById("topStudentName");
+        studentName.textContent = user.displayName || "Student";
+        topStudentName.textContent = user.displayName || "Student";
+
+        const usernameInput = document.getElementById("username");
+        const emailInput = document.getElementById("email");
+        const phoneInput = document.getElementById("phone");
+
+        usernameInput.value = user.email.split("@")[0];
+        emailInput.value = user.email;
+        phoneInput.value = localStorage.getItem("phone") || "";
+    }
+});
+
+function saveProfile() {
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    localStorage.setItem("phone", phone);
+    alert("Profile updated successfully!");
+}
+
+function logoutUser() {
+    auth.signOut();
+}
+</script>
+</head>
+<body>
+<aside class="sidebar">
+  <div>
+    <div class="logo">
+      <img src="https://i.pinimg.com/736x/27/d6/ad/27d6ad0843c149d09f5cbf1baf20b631.jpg" alt="logo" />
+      <h2>Edutrack</h2>
+    </div>
+    <nav>
+      <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+      <a href="uploadpage.html"><i class="fa-solid fa-circle-up"></i> Uploads</a>
+      <a href="downloadpage.html"><i class="fa-regular fa-circle-down"></i> Downloads</a>
+      <a href="resourcespage.html"><i class="fa-solid fa-file"></i> Resources</a>
+      <a href="profile.html" class="active"><i class="fa-solid fa-user"></i> Profile</a>
+      <a href="contactpage.html"><i class="fa-solid fa-comment"></i> Contact</a>
+    </nav>
+  </div>
+  <button class="logout-btn" onclick="logoutUser()"><i class="fa-regular fa-circle-xmark"></i> Logout</button>
+</aside>
+
+<main class="main-content">
+  <header class="greeting-banner">
+    <div>
+      <h1>Personal Information</h1>
+      <p>Update your personal details and password below.</p>
+    </div>
+    <div class="user-profile">
+      <i class="fa-regular fa-user"></i>
+      <span id="topStudentName">Student</span>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="profile-wrapper">
+      <div class="profile-container">
+        <h2 class="profile-title">Profile</h2>
+        <p class="profile-subtitle">Edit your details below.</p>
+        <div class="profile-form">
+          <label for="username">Username</label>
+          <input type="text" id="username" readonly />
+          <label for="email">Email</label>
+          <input type="email" id="email" />
+          <label for="phone">Phone</label>
+          <input type="text" id="phone" />
+          <label for="password">New Password</label>
+          <input type="password" id="password" placeholder="Enter new password" />
+          <button class="profile-save-btn" onclick="saveProfile()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="JS/admin.js"></script>
+</body>
+</html>

@@ -7,6 +7,15 @@
   <link rel="stylesheet" href="CSS/admin.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
+  <script type="module">
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../Public/loginpage.html";
+    }
+});
+</script>
 </head>
 
 <body>
@@ -17,12 +26,12 @@
       <h2>Edutrack</h2>
     </div>
     <nav>
-      <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+      <a href="dashboard.html" ><i class="fa-solid fa-house"></i> Dashboard</a>
       <a href="uploadpage.html"><i class="fa-solid fa-circle-up"></i> Uploads</a>
       <a href="downloadpage.html"><i class="fa-regular fa-circle-down"></i> Downloads</a>
       <a href="resourcespage.html" class="active"><i class="fa-solid fa-file"></i> Resources</a>
       <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
-      <a href="../Public/contactpage.html"><i class="fa-solid fa-comment"></i> Contact</a>
+      <a href="contactpage.html"><i class="fa-solid fa-comment"></i> Contact</a>
     </nav>
   </div>
   <button class="logout-btn" onclick="logoutUser()"><i class="fa-regular fa-circle-xmark"></i> Logout</button>
