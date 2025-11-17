@@ -1,20 +1,106 @@
+// ------------------------------
+// AUTH + PROFILE LOAD (FIREBASE)
+// ------------------------------
+
+import { auth, db } from "../Public/JS/firebase-init.js";
+import { onAuthStateChanged, updateEmail, updatePassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+// Wait until page is ready
 document.addEventListener("DOMContentLoaded", () => {
-  const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  if(user && user.name){
-    document.getElementById("topStudentName").textContent = user.name;
-  } else {
-    window.location.href = "../Public/loginpage.html";
-  }
-  initCharts();
+  
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "../Public/loginpage.html";
+      return;
+    }
+
+    // Display name at top right
+    document.getElementById("topStudentName").textContent = data.fullname || data.username || "Student";
+
+    const uid = user.uid;
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const data = userSnap.data();
+
+      // Fill the profile fields
+      document.getElementById("fullname").value = data.fullname || "";
+      document.getElementById("username").value = data.username || "";
+      document.getElementById("email").value = data.email || "";
+      document.getElementById("phone").value = data.phone || "";
+
+      // Set top name
+      document.getElementById("topStudentName").textContent = data.fullname || data.username || "Student";
+    }
+
+    initCharts();
+  });
+
 });
 
-function logoutUser() {
-  localStorage.removeItem("loggedInUser");
-  window.location.href = "../Public/loginpage.html";
-}
 
+// ------------------------------
+// LOGOUT
+// ------------------------------
+function logoutUser() {
+  auth.signOut().then(() => {
+    window.location.href = "../Public/loginpage.html";
+  });
+}
+window.logoutUser = logoutUser;
+
+
+// ------------------------------
+// SAVE PROFILE CHANGES
+// ------------------------------
+document.getElementById("profileForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const user = auth.currentUser;
+  const uid = user.uid;
+
+  const updatedFullname = document.getElementById("fullname").value;
+  const updatedEmail = document.getElementById("email").value;
+  const updatedPhone = document.getElementById("phone").value;
+  const newPassword = document.getElementById("password").value.trim();
+
+  try {
+    const userRef = doc(db, "users", uid);
+
+    // Save Firestore profile data
+    await updateDoc(userRef, {
+      fullname: updatedFullname,
+      email: updatedEmail,
+      phone: updatedPhone,
+      username: updatedEmail.split("@")[0]
+    });
+
+    // Update Firebase Auth email
+    if (updatedEmail !== user.email) {
+      await updateEmail(user, updatedEmail);
+    }
+
+    // Update Firebase Auth password
+    if (newPassword.length > 0) {
+      await updatePassword(user, newPassword);
+    }
+
+    document.getElementById("saveMessage").textContent = "Profile updated successfully!";
+
+  } catch (error) {
+    alert(error.message);
+  }
+});
+
+
+// ------------------------------
+// CHARTS (UNCHANGED)
+// ------------------------------
 function initCharts() {
   const labels = ["Week 1","Week 2","Week 3","Week 4","Week 5"];
+
   const attendanceData = {
     labels: labels,
     datasets: [{
@@ -25,6 +111,7 @@ function initCharts() {
       tension:0.25, fill:true, pointRadius:3, pointHoverRadius:5
     }]
   };
+
   const gradesData = {
     labels: labels,
     datasets: [{
@@ -35,6 +122,7 @@ function initCharts() {
       tension:0.25, fill:true, pointRadius:3, pointHoverRadius:5
     }]
   };
+
   const pieData = {
     labels:["Submitted On Time","Due","Late/Not Submitted"],
     datasets:[{
@@ -43,21 +131,41 @@ function initCharts() {
       borderWidth:0
     }]
   };
+
   const commonOptions = {
     responsive:true,
     maintainAspectRatio:false,
     plugins:{ legend:{ labels:{ color:"#F3F3F3" } }, tooltip:{ mode:"index", intersect:false } },
-    scales:{ x:{ ticks:{ color:"#8E8B82" }, grid:{ color:"rgba(142,139,130,0.08)" } },
-             y:{ beginAtZero:true, max:100, ticks:{ color:"#8E8B82" }, grid:{ color:"rgba(142,139,130,0.08)" } } }
+    scales:{ 
+      x:{ ticks:{ color:"#8E8B82" }, grid:{ color:"rgba(142,139,130,0.08)" } },
+      y:{ beginAtZero:true, max:100, ticks:{ color:"#8E8B82" }, grid:{ color:"rgba(142,139,130,0.08)" } }
+    }
   };
+
   const attendanceCanvas = document.getElementById("attendanceChart");
-  if(attendanceCanvas){ new Chart(attendanceCanvas.getContext("2d"), { type:"line", data:attendanceData, options:commonOptions }); }
+  if(attendanceCanvas){ 
+    new Chart(attendanceCanvas.getContext("2d"), { type:"line", data:attendanceData, options:commonOptions }); 
+  }
+
   const gradesCanvas = document.getElementById("gradesChart");
-  if(gradesCanvas){ new Chart(gradesCanvas.getContext("2d"), { type:"line", data:gradesData, options:JSON.parse(JSON.stringify(commonOptions)) }); }
+  if(gradesCanvas){ 
+    new Chart(gradesCanvas.getContext("2d"), { type:"line", data:gradesData, options:JSON.parse(JSON.stringify(commonOptions)) }); 
+  }
+
   const pieCanvas = document.getElementById("pieChart");
-  if(pieCanvas){ new Chart(pieCanvas.getContext("2d"), { type:"pie", data:pieData, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:"bottom", labels:{ color:"#F3F3F3", padding:14 } } } } }); }
+  if(pieCanvas){ 
+    new Chart(pieCanvas.getContext("2d"), { type:"pie", data:pieData, options:{ 
+      responsive:true, 
+      maintainAspectRatio:false, 
+      plugins:{ legend:{ position:"bottom", labels:{ color:"#F3F3F3", padding:14 } } }
+    }}); 
+  }
 }
 
+
+// ------------------------------
+// UPLOAD SYSTEM (UNCHANGED)
+// ------------------------------
 const uploadArea = document.getElementById("uploadArea");
 const fileInput = document.getElementById("fileInput");
 const progressContainer = document.querySelector(".progress-container");
@@ -80,8 +188,10 @@ function uploadSingleFile(file) {
   progressContainer.style.display = "block";
   progressBar.style.width = "0%";
   uploadMessage.textContent = "";
+
   const fakeUpload = setInterval(() => {
     let currentWidth = parseFloat(progressBar.style.width);
+
     if (currentWidth >= 100) {
       clearInterval(fakeUpload);
       addFileToTable(file);
@@ -97,85 +207,19 @@ function uploadSingleFile(file) {
 function addFileToTable(file) {
   const row = document.createElement("tr");
   const today = new Date().toLocaleDateString();
-  const user = JSON.parse(localStorage.getItem("loggedInUser")) || { name: "Admin" };
+
   row.innerHTML = `
     <td>${file.name}</td>
     <td>${(file.size / 1024).toFixed(2)} KB</td>
     <td>${document.getElementById("fileCategory").value}</td>
     <td>${today}</td>
-    <td>${user.name}</td>
+    <td>${auth.currentUser.displayName || "Student"}</td>
     <td><button onclick="downloadFile('${file.name}')">Download</button></td>
   `;
+
   uploadedTableBody.appendChild(row);
 }
 
 function downloadFile(filename) {
   alert(`Downloading ${filename} (replace with real server download).`);
 }
-
-// --- Authentication Check ---
-if (!localStorage.getItem("loggedInUser")) {
-    window.location.href = "../Public/loginpage.html";
-}
-
-// --- IndexedDB Setup ---
-let db;
-const request = indexedDB.open("EduTrackDB", 1);
-
-request.onupgradeneeded = function (event) {
-    db = event.target.result;
-
-    if (!db.objectStoreNames.contains("users")) {
-        db.createObjectStore("users", { keyPath: "username" });
-    }
-};
-
-request.onsuccess = function (event) {
-    db = event.target.result;
-    loadProfileData();
-};
-
-// --- Load Data Into Profile Page ---
-function loadProfileData() {
-    const username = localStorage.getItem("loggedInUser");
-
-    const tx = db.transaction("users", "readonly");
-    const store = tx.objectStore("users");
-    const request = store.get(username);
-
-    request.onsuccess = function () {
-        const user = request.result;
-
-        document.getElementById("username").value = user.username;
-        document.getElementById("fullname").value = user.fullname;
-        document.getElementById("email").value = user.email;
-        document.getElementById("phone").value = user.phone;
-    };
-}
-
-// --- Save Changes ---
-document.getElementById("profileForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const updatedUser = {
-        username: document.getElementById("username").value,
-        fullname: document.getElementById("fullname").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value,
-        password: document.getElementById("password").value.trim()
-    };
-
-    const tx = db.transaction("users", "readwrite");
-    const store = tx.objectStore("users");
-
-    store.put(updatedUser);
-
-    tx.oncomplete = function () {
-        document.getElementById("saveMessage").textContent = "Profile updated successfully!";
-    };
-});
-
-// --- Logout Button ---
-document.getElementById("logoutBtn").addEventListener("click", () => {
-    localStorage.removeItem("loggedInUser");
-});

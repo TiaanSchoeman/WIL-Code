@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="CSS/public.css" />
 
   <style>
-  
     body {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
         url('https://i.pinimg.com/1200x/cd/91/0e/cd910ecd1f50b1ddff82d26438f8eeec.jpg') center/cover no-repeat;
@@ -51,10 +50,32 @@
     .register-box input::placeholder {
       color: #ddd;
     }
-    
+
     p {
       color: white;
     }
+    /* Two-column register layout */
+    .register-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .register-grid .field input {
+      width: 100%;
+    }
+
+    .register-grid .full {
+      grid-column: span 2;
+      text-align: center;
+    }
+
+    /* Make form wider */
+    .register-box {
+      width: 650px !important;
+    }
+
   </style>
 </head>
 
@@ -68,60 +89,97 @@
         </div>
     </header>
   </a>
-    <nav>
-        <a href="loginpage.html"><i class="fa-regular fa-user"></i> Login</a>
-        <a href="registerpage.html"><i class="fa-regular fa-hand-pointer"></i> Register</a>
-        <a href="contactpage.html" class="active"><i class="fa-regular fa-message"></i> Contact</a>
-    </nav>
+  <nav>
+    <a href="loginpage.html"><i class="fa-regular fa-user"></i> Login</a>
+    <a href="registerpage.html"><i class="fa-regular fa-hand-pointer"></i> Register</a>
+    <a href="contactpage.html" class="active"><i class="fa-regular fa-message"></i> Contact</a>
+  </nav>
 
 
   <div class="register-box">
     <h2>Create Account</h2>
-    <form id="registerForm">
-      <input type="text" id="regName" placeholder="Full Name" required />
-      <input type="email" id="regEmail" placeholder="Email Address" required />
-      <input type="password" id="regPassword" placeholder="Password" required />
-      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-      <button type="submit" class="btn">Register</button>
-      <p>Already have an account? <a href="loginpage.html">Login</a></p>
+    <form id="registerForm" class="register-grid">
+
+      <div class="field">
+        <input type="text" id="regName" placeholder="Full Name" required />
+      </div>
+
+      <div class="field">
+        <input type="email" id="regEmail" placeholder="Email Address" required />
+      </div>
+
+      <div class="field">
+        <input type="text" id="regUsername" placeholder="Username" required />
+      </div>
+
+      <div class="field">
+        <input type="text" id="regPhone" placeholder="Phone Number" required />
+      </div>
+
+      <div class="field">
+        <input type="text" id="regGrade" placeholder="Grade / Year" required />
+      </div>
+
+      <div class="field">
+        <input type="text" id="regSchool" placeholder="School Name" required />
+      </div>
+
+      <div class="field">
+        <input type="text" id="regStudentID" placeholder="Student ID" required />
+      </div>
+
+      <div class="field">
+        <input type="password" id="regPassword" placeholder="Password" required />
+      </div>
+
+      <div class="field full">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      </div>
+
+      <div class="full">
+        <button type="submit" class="btn">Register</button>
+      </div>
+
+      <p class="full">Already have an account? <a href="loginpage.html">Login</a></p>
     </form>
+
   </div>
 
   <script src="JS/public.js"></script>
   <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
-<script type="module">
-import { auth, db } from "./JS/firebase-init.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-import { setDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+  <script type="module">
+    import { auth, db } from "./JS/firebase-init.js";
+    import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+    import { setDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
 
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const fullname = document.getElementById("regName").value;
-    const email = document.getElementById("regEmail").value;
-    const password = document.getElementById("regPassword").value;
+      const fullname = document.getElementById("regName").value;
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
 
-    try {
+      try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         // Save profile to Firestore
         await setDoc(doc(db, "users", user.uid), {
-            fullname,
-            email,
-            phone: "",
-            username: email.split("@")[0]
+          fullname,
+          email,
+          phone: "",
+          username: email.split("@")[0]
         });
 
         alert("Account created successfully!");
         window.location.href = "loginpage.html";
 
-    } catch (err) {
+      } catch (err) {
         alert(err.message);
-    }
-});
-</script>
+      }
+    });
+  </script>
 
 </body>
 
