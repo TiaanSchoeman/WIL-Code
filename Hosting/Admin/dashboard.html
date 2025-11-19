@@ -7,16 +7,7 @@
   <link rel="stylesheet" href="CSS/admin.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
-  <script type="module">
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-
-onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        window.location.href = "../Public/loginpage.html";
-    }
-});
-</script>
-
+  <script type="module" src="JS/admin.js"></script>
 </head>
 <body>
 <aside class="sidebar">
@@ -38,7 +29,6 @@ onAuthStateChanged(auth, (user) => {
 </aside>
 
 <main class="main-content">
-
   <header class="greeting-banner">
     <div>
       <h1>Welcome back, <span id="studentName">Student</span></h1>
@@ -101,9 +91,6 @@ onAuthStateChanged(auth, (user) => {
       <canvas id="pieChart"></canvas>
     </div>
   </section>
-
 </main>
-
-<script src="JS/admin.js"></script>
 </body>
 </html>

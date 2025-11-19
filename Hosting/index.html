@@ -60,29 +60,11 @@
             <button class="btn">Get Started</button>
         </a>
     </section>
-    <script type="module">
-    import {
-    getAuth,
-    onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-    import { app } from "./Public/JS/firebase-init.js"; // adjust path if needed
-
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-        user.getIdTokenResult().then((token) => {
-        if (token.claims.admin === true) {
-            window.location.href = "./Admin/admin-dashboard.html";
-        } else {
-            window.location.href = "./Public/dashboard.html";
-        }
-        });
-    }
-    });
-    </script>
-
     <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
+    <script type="module" src="JS/firebase.js"></script>
+    <script type="module" src="JS/public.js"></script>
+
+
 </body>
 
 </html>

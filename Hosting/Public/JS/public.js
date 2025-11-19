@@ -1,117 +1,75 @@
-// ---------------- REGISTER & LOGIN ----------------
-document.addEventListener("DOMContentLoaded", () => {
+import { auth, db } from "./firebase.js";
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  updateProfile 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  // ---------------- REGISTER ----------------
-  const registerForm = document.getElementById("registerForm");
-  if (registerForm) {
-    registerForm.addEventListener("submit", function (e) {
-      e.preventDefault();
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      // Get all input values and trim whitespace
-      const name = document.getElementById("regName").value.trim();
-      const email = document.getElementById("regEmail").value.trim();
-      const username = document.getElementById("regUsername").value.trim();
-      const phone = document.getElementById("regPhone").value.trim();
-      const grade = document.getElementById("regGrade").value.trim();
-      const school = document.getElementById("regSchool").value.trim();
-      const studentID = document.getElementById("regStudentID").value.trim();
-      const password = document.getElementById("regPassword").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
+// ===== Registration =====
+const registerForm = document.getElementById("registerForm");
 
-      // Check for empty fields
-      if (!name || !email || !username || !phone || !grade || !school || !studentID || !password || !confirmPassword) {
-        alert("Please fill in all fields.");
-        return;
-      }
+if (registerForm) {
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      // Basic email format check
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(email)) {
-        alert("Please enter a valid email address.");
-        return;
-      }
+    const name = document.getElementById("regName").value;
+    const email = document.getElementById("regEmail").value;
+    const phone = document.getElementById("regPhone").value;
+    const school = document.getElementById("regSchool").value;
+    const password = document.getElementById("regPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-      // Phone number basic check (digits only)
-      if (!/^\d{7,15}$/.test(phone)) {
-        alert("Please enter a valid phone number (7-15 digits).");
-        return;
-      }
+    const message = document.getElementById("registerMessage");
 
-      // Password match check
-      if (password !== confirmPassword) {
-        alert("Passwords do not match.");
-        return;
-      }
+    if (password !== confirmPassword) {
+      message.textContent = "Passwords do not match!";
+      message.style.color = "red";
+      return;
+    }
 
-      // Optional: password length check
-      if (password.length < 6) {
-        alert("Password must be at least 6 characters.");
-        return;
-      }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      // Get existing users from localStorage
-      let users = JSON.parse(localStorage.getItem("users")) || [];
+      await updateProfile(user, { displayName: name });
 
-      // Check if email already exists (case-insensitive)
-      const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-      if (existingUser) {
-        alert("An account with this email already exists.");
-        return;
-      }
+      await setDoc(doc(db, "users", user.uid), { name, email, phone, school });
 
-      // Add new user
-      users.push({
-        name,
-        email,
-        username,
-        phone,
-        grade,
-        school,
-        studentID,
-        password
-      });
+      message.textContent = "✅ Registered successfully!";
+      message.style.color = "lightgreen";
+      registerForm.reset();
 
-      localStorage.setItem("users", JSON.stringify(users));
+    } catch (error) {
+      message.textContent = error.message;
+      message.style.color = "red";
+    }
+  });
+}
 
-      alert("Account created successfully!");
-      window.location.href = "loginpage.html";
-    });
-  }
 
-  // ---------------- LOGIN ----------------
-  const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", function (e) {
-      e.preventDefault();
+// ===== Login =====
+const loginForm = document.getElementById("loginForm");
 
-      const email = document.getElementById("loginEmail").value.trim();
-      const password = document.getElementById("loginPassword").value;
-      const message = document.getElementById("loginMessage");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      if (!email || !password) {
-        message.textContent = "Please enter both email and password.";
-        message.style.color = "red";
-        return;
-      }
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
 
-      const users = JSON.parse(localStorage.getItem("users")) || [];
+    const loginMessage = document.getElementById("loginMessage");
+    loginMessage.textContent = "";
 
-      // Find user by email (case-insensitive) and password
-      const user = users.find(
-        u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-      );
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("✅ Login successful!");
+      window.location.href = "../Admin/dashboard.html";
 
-      if (user) {
-        localStorage.setItem("loggedInUser", JSON.stringify(user));
-        message.textContent = "Login successful! Redirecting...";
-        message.style.color = "lightgreen";
-        setTimeout(() => {
-          window.location.href = "../Admin/dashboard.html"; // adjust path if needed
-        }, 1000);
-      } else {
-        message.textContent = "Invalid email or password.";
-        message.style.color = "red";
-      }
-    });
-  }
-});
+    } catch (error) {
+      loginMessage.textContent = error.message;
+      loginMessage.style.color = "red";
+    }
+  });
+}

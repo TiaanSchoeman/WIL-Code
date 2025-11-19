@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,7 +18,6 @@
       align-items: center;
       justify-content: center;
     }
-
     .register-box {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
@@ -28,57 +26,21 @@
       width: 380px;
       text-align: center;
     }
-
-    .register-box h2 {
-      font-size: 28px;
-      margin-bottom: 25px;
-      color: white;
-    }
-
+    .register-box h2 { font-size: 28px; margin-bottom: 25px; color: white; }
     .register-box input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-      outline: none;
-      font-size: 15px;
+      width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 8px;
+      background: rgba(255,255,255,0.2); color: #fff; outline: none; font-size: 15px;
     }
-
-    .register-box input::placeholder {
-      color: #ddd;
-    }
-
-    p {
-      color: white;
-    }
-    /* Two-column register layout */
-    .register-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .register-grid .field input {
-      width: 100%;
-    }
-
-    .register-grid .full {
-      grid-column: span 2;
-      text-align: center;
-    }
-
-    /* Make form wider */
-    .register-box {
-      width: 650px !important;
-    }
-
+    .register-box input::placeholder { color: #ddd; }
+    p { color: white; }
+    .register-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+    .register-grid .field input { width: 100%; }
+    .register-grid .full { grid-column: span 2; text-align: center; }
+    .register-box { width: 650px !important; }
+    .btn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; }
+    .error-message { margin-top: 12px; }
   </style>
 </head>
-
 <body>
   <a href="../index.html">
     <header>
@@ -89,98 +51,32 @@
         </div>
     </header>
   </a>
-  <nav>
-    <a href="loginpage.html"><i class="fa-regular fa-user"></i> Login</a>
-    <a href="registerpage.html"><i class="fa-regular fa-hand-pointer"></i> Register</a>
-    <a href="contactpage.html" class="active"><i class="fa-regular fa-message"></i> Contact</a>
-  </nav>
 
+  <nav>
+    <a href="loginpage.html"> Login</a>
+    <a href="registerpage.html"> Register</a>
+    <a href="contactpage.html" class="active"> Contact</a>
+  </nav>
 
   <div class="register-box">
     <h2>Create Account</h2>
     <form id="registerForm" class="register-grid">
-
-      <div class="field">
-        <input type="text" id="regName" placeholder="Full Name" required />
-      </div>
-
-      <div class="field">
-        <input type="email" id="regEmail" placeholder="Email Address" required />
-      </div>
-
-      <div class="field">
-        <input type="text" id="regUsername" placeholder="Username" required />
-      </div>
-
-      <div class="field">
-        <input type="text" id="regPhone" placeholder="Phone Number" required />
-      </div>
-
-      <div class="field">
-        <input type="text" id="regGrade" placeholder="Grade / Year" required />
-      </div>
-
-      <div class="field">
-        <input type="text" id="regSchool" placeholder="School Name" required />
-      </div>
-
-      <div class="field">
-        <input type="text" id="regStudentID" placeholder="Student ID" required />
-      </div>
-
-      <div class="field">
-        <input type="password" id="regPassword" placeholder="Password" required />
-      </div>
-
-      <div class="field full">
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-      </div>
-
-      <div class="full">
-        <button type="submit" class="btn">Register</button>
-      </div>
-
-      <p class="full">Already have an account? <a href="loginpage.html">Login</a></p>
+      <div class="field"><input type="text" id="regName" placeholder="Full Name" required /></div>
+      <div class="field"><input type="email" id="regEmail" placeholder="Email Address" required /></div>
+      <div class="field"><input type="text" id="regPhone" placeholder="Phone Number" required /></div>
+      <div class="field"><input type="text" id="regSchool" placeholder="School Name" required /></div>
+      <div class="field full"><input type="password" id="regPassword" placeholder="Password" required /></div>
+      <div class="field full"><input type="password" id="confirmPassword" placeholder="Confirm Password" required /></div>
+      <div class="full"><button type="submit" class="btn">Register</button></div>
+      <p class="full">Already have an account? <a href="loginpage.html" id="loginLink">Login</a></p>
     </form>
-
+    <p id="registerMessage" class="error-message"></p>
   </div>
 
-  <script src="JS/public.js"></script>
+  <!-- Module scripts: firebase module first, then public logic -->
+  <script type="module" src="JS/firebase.js"></script>
+  <script type="module" src="JS/public.js"></script>
+
   <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
-  <script type="module">
-    import { auth, db } from "./JS/firebase-init.js";
-    import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-    import { setDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-
-    document.getElementById("registerForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const fullname = document.getElementById("regName").value;
-      const email = document.getElementById("regEmail").value;
-      const password = document.getElementById("regPassword").value;
-
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Save profile to Firestore
-        await setDoc(doc(db, "users", user.uid), {
-          fullname,
-          email,
-          phone: "",
-          username: email.split("@")[0]
-        });
-
-        alert("Account created successfully!");
-        window.location.href = "loginpage.html";
-
-      } catch (err) {
-        alert(err.message);
-      }
-    });
-  </script>
-
 </body>
-
 </html>

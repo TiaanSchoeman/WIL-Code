@@ -6,16 +6,7 @@
   <title>Edutrack | Resources</title>
   <link rel="stylesheet" href="CSS/admin.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
-  <script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
-  <script type="module">
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        window.location.href = "../Public/loginpage.html";
-    }
-});
-</script>
 </head>
 
 <body>
@@ -74,8 +65,9 @@ onAuthStateChanged(auth, (user) => {
     </ul>
   </section>
 </main>
-
+<script src="https://kit.fontawesome.com/d6e9d7304f.js" crossorigin="anonymous"></script>
 <script src="JS/admin.js"></script>
+  <script src="JS/firebase.js"></script>
 <script>
 function filterResources() {
   const input = document.getElementById('resourceSearch').value.toLowerCase();
@@ -87,5 +79,15 @@ function filterResources() {
   }
 }
 </script>
+  <script type="module">
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../Public/loginpage.html";
+    }
+});
+</script>
+
 </body>
 </html>
